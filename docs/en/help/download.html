@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>
+      WB Help - Download
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../icon.svg">
+    <script src="../../script.js">
+    </script>
+  </head>
+  <body>
+    <header>
+      <ul id="headerList">
+        <li>
+          <svg onclick="toggleMenu()" id="menuButton" viewBox="0 0 100 100">
+            <path d="M0 0L100 0L100 15L0 15ZM0 42.5L100 42.5L100 57.5L0 57.5ZM0 85L100 85L100 100L0 100Z"/>
+          </svg>
+        </li>
+        <li>
+          <a href="../index.html">
+            <svg id="logo" viewBox="0 0 255 100">
+              <path fill-rule="evenodd" d="M30 70L45 70L50 55L68 55L84 95L100 95L65 5L50 5ZM54 40L63 40L58 27ZM5 5L20 5L20 80L60 80L60 95L5 95ZM80 5L115 95L130 95L118 65L130 30L114 30L110 44L95 5ZM110 5L185 5L185 20L155 20L155 95L140 95L140 20L110 20ZM195 5L250 5L250 20L210 20L210 42.5L250 42.5L250 57.5L210 57.5L210 80L250 80L250 95L195 95Z"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="../index.html">
+            HOME
+          </a>
+        </li>
+        <li>
+          <a href="../features.html">
+            FEATURES
+          </a>
+        </li>
+        <li id="headerList-currentPage-underline">
+          <a id="headerList-currentPage-text" href="../help.html">
+            HELP
+          </a>
+        </li>
+      </ul>
+      <a download="WB-Installer.sh" href="../WB-Installer.sh" target="_blank" id="headerDownloadButton">
+        <b>
+          DOWNLOAD
+        </b>
+      </a>
+      <div id="headerDeko">
+      </div>
+    </header>
+    <main>
+      <ul id="menu">
+      </ul>
+      <div class="space">
+      </div>
+      <h5>
+        How to download WB
+      </h5>
+      1. <a href="../WB-Installer.sh">Click here</a> and save the file, that you will be sent to.
+      <br>
+      2. Open a file manager/file explorer and open the folder, that you saved the installer in.
+      <br>
+      3. Right click the "WB-Installer.sh" file, select "properties" (or something like that) and set it to executeable.
+      <br>
+      4. Close the "properties" menu
+      <br>
+      5. Double click the "WB-Installer.sh" file.
+      <br>
+      6. If a window opens, that shows the text:
+<pre>
+Do you agree to the Terms of Service?
+Please always answer with yes or no
+</pre>
+      then you did everything right and you can continue with step 7, but if instead a texteditor opens, that shows some nonsence, you have to continue with step 6.1.
+      <br>
+      6.1. Open a terminal or console (<a href="https://google.com/search?q=How+to+open+a+terminal" target="_blank">click here to search for how to do that</a>)
+      <br>
+      6.2. Navigate into the folder that contains the "WB-Installer.sh" file by typing "cd " and than the name of your folder (if it's multible layers deep, seperate the folder names with /) then pressing enter (so for example if in your home folder, there is a "Downloads" folder and in that is a folder called "Apps" and in there is the "WB-Installer.sh" file, you have to type "cd Downloads/Apps" and press enter).
+      <br>
+      6.3. Type "bash WB-Installer.sh" or if you have renamed the file, then replace "WB-Installer.sh" with the name, that you gave it.
+      <br>
+      6.4. If it shows the text:
+<pre>
+Do you agree to the Terms of Service?
+Please always answer with yes or no
+</pre>
+      then you did everything right and you can continue with step 7, but if instead you get a error message, try to search for <a href="https://google.com/search?q=How+to+run+a+bash+script" target="_blank">how to run a bash script</a> and continue with step 7, when you see the text above.
+      <br>
+      7. <a href="../TermsOfService.html">Read the terms of service</a>, type "yes" and press enter if you agree to them or type "no" and press enter, if you don't agree.
+      <br>
+      8. Wait until it shows
+<pre>
+Successfully installed WB!
+</pre>
+      and then type "yes" and press enter, if you want to run it or type "no" and press enter, if you don't.
+      9. If you don't want to run it, or if you ran it and closed it, you can close the terminal or console (just don't colse it, while WB is running because that would close it).
+    </main>
+  </body>
+</html>
