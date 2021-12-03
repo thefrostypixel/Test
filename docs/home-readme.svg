@@ -8,7 +8,7 @@
           left: 0;
           padding: 0;
           maring: 0;
-          width: 200%;
+          width: 50%;
           background-color: #333333;
           outline: 5px solid #FF0000;
           color: #FFFFFF;
