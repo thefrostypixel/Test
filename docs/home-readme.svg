@@ -8,7 +8,7 @@
           left: 0;
           width: 100%;
           background-color: #333333;
-          border: 5px solid #FF0000;
+          outline: 5px solid #FF0000;
           color: #FFFFFF;
         }
       </style>
