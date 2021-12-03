@@ -1,1 +1,1 @@
-<iframe src="https://thefrostypixel.github.io/Test">
+<img src="https://thefrostypixel.github.io/Test">
