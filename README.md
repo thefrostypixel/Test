@@ -1,1 +1,1 @@
-<img src="https://thefrostypixel.github.io/Test/background/default.svg">
+<img src="https://thefrostypixel.github.io/Test/backgrounds/default.svg">
