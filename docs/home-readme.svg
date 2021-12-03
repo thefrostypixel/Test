@@ -3,6 +3,7 @@
     <div xmlns="http://www.w3.org/1999/xhtml">
       <style>
         body {
+          width: 100%;
           background-color: #333333;
         }
       </style>
