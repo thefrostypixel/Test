@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      IAB
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.svg">
+    <script src="script.js">
+    </script>
+  </head>
+  <body id="body">
+    <div id="lockScreenBox" onmousedown="startDraggingLockScreen(event);" onmouseup="stopLockScreenDrag(event);" onmousemove="lockScreenMouseMove(event);">
+      <div id="unlockScreen">
+        <input id="unlockScreen-password" type="password">
+      </div>
+      <div id="lockScreen">
+      </div>
+      <div id="lockScreenTimeOverlay">
+        <div id="lockScreen-time">
+        </div>
+        <div id="lockScreen-date">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

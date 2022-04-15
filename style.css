@@ -1,0 +1,75 @@
+body {
+  background-color: #f00;
+  color: #EEEEEE;
+  font-family: Arial;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  user-select: none;
+  width: 100vw;
+}
+
+/* LOCK-SCREEN */
+
+#lockScreenBox {
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transition-duration: .2s;
+  width: 100vw;
+}
+
+#lockScreenTimeOverlay {
+  height: 100vh;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+#lockScreen-time {
+  font-size: 15vw;
+  font-weight: bold;
+  padding-top: 10vh;
+}
+
+#lockScreen-date {
+  font-size: 5vw;
+  font-weight: bold;
+  padding-top: 1vh;
+}
+
+#lockScreen {
+  background-color: #000000;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+#unlockScreen {
+  background-color: #000000;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+#unlockScreen-password {
+  background-color: #101010;
+  border: 1px solid #303030;
+  bottom: 10vh;
+  color: #EEEEEE;
+  font-size: 3vh;
+  left: calc(20vw - 1vh - 1px);
+  outline: none;
+  padding: 1vh;
+  position: fixed;
+  width: 60vw;
+}
