@@ -119,6 +119,16 @@ main {
   height: 100vh;
 }
 
+@media (max-width: 800px) {
+  #background-deco > svg:nth-child(4) {
+    left: calc(50vw - 400px);
+  }
+  
+  #background-deco > svg:nth-child(5) {
+    right: calc(50vw - 400px);
+  }
+}
+
 @media (prefers-reduced-motion) {
   #background-deco {
     opacity: 0;
