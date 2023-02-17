@@ -73,7 +73,8 @@ main {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 #main-content {
@@ -81,7 +82,7 @@ main {
 }
 
 #background-deco {
-  position: absolute
+  position: absolute;
 }
 
 #background-deco > svg {
