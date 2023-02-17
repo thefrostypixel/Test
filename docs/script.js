@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   loadIcons();
   window.addEventListener("resize", () => {
-    updateTableSize();
     updateHeader();
     document.getElementById("footer").setAttribute("style", "margin-top: " + (Math.max(window.innerHeight - document.getElementById("main-content").getBoundingClientRect().height - document.getElementById("footer").getBoundingClientRect().height - 20, 0) + 20) + "px;");
   });
@@ -31,11 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollAnimatedElements[i].classList.add("as-hidden");
   }
   setTimeout(animateScroll);
-});
-
-document.addEventListener("scroll", () => {
-  updateHeaderDownloadButton();
-  animateScroll();
+  document.getElementById("main").addEventListener("scroll", () => {
+    updateHeaderDownloadButton();
+    animateScroll();
+  });
 });
 
 document.addEventListener("click", (e) => {
@@ -68,19 +66,6 @@ function loadIcons() {
   }
 }
 
-function animateScroll() {
-  var scrollAnimatedElements = document.getElementsByClassName("animate-scroll");
-  for (i = 0; i < scrollAnimatedElements.length; i++) {
-    if (scrollAnimatedElements[i].getBoundingClientRect().top < window.innerHeight) {
-      scrollAnimatedElements[i].classList.add("as-visible");
-      scrollAnimatedElements[i].classList.remove("as-hidden");
-    } else {
-      scrollAnimatedElements[i].classList.add("as-hidden");
-      scrollAnimatedElements[i].classList.remove("as-visible");
-    }
-  }
-}
-
 function updateHeaderDownloadButton() {
   if (document.getElementById("page-download-button") != null) {
     var rect = document.getElementById("page-download-button").getBoundingClientRect();
@@ -92,10 +77,16 @@ function updateHeaderDownloadButton() {
   }
 }
 
-function updateTableSize() {
-  var tables = document.getElementsByTagName("table");
-  for (i = 0; i < tables.length; i++) {
-    var table = tables[i];
+function animateScroll() {
+  var scrollAnimatedElements = document.getElementsByClassName("animate-scroll");
+  for (i = 0; i < scrollAnimatedElements.length; i++) {
+    if (scrollAnimatedElements[i].getBoundingClientRect().top < window.innerHeight) {
+      scrollAnimatedElements[i].classList.add("as-visible");
+      scrollAnimatedElements[i].classList.remove("as-hidden");
+    } else {
+      scrollAnimatedElements[i].classList.add("as-hidden");
+      scrollAnimatedElements[i].classList.remove("as-visible");
+    }
   }
 }
 
