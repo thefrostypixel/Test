@@ -81,11 +81,11 @@ main {
 }
 
 #background-deco {
-  position: fixed;
+  position: absolute
 }
 
 #background-deco > svg {
-  position: fixed;
+  position: absolute;
   z-index: -100;
 }
 
@@ -97,13 +97,13 @@ main {
 
 #background-deco > svg:nth-child(2) {
   top: calc(50vh - 175px);
-  left: calc((var(--side-space) - 350px));
+  left: calc(var(--side-space) - 350px);
   width: 350px;
 }
 
 #background-deco > svg:nth-child(3) {
   top: calc(50vh - 175px);
-  right: calc((var(--side-space) - 350px));
+  left: calc(100vw - var(--side-space));
   width: 350px;
 }
 
@@ -115,7 +115,7 @@ main {
 
 #background-deco > svg:nth-child(5) {
   top: 0;
-  right: 0;
+  left: calc(100vw - 100vh / 16);
   height: 100vh;
 }
 
@@ -125,7 +125,7 @@ main {
   }
   
   #background-deco > svg:nth-child(5) {
-    right: calc(50vw - 400px);
+    left: calc(50vw + 400px - 100vh / 16);
   }
 }
 
