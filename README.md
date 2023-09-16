@@ -1,2 +1,1 @@
-<!--<img src="/test.svg" width="100%">-->
-[![Image Alt Text](test.svg)](https://example.com)
+[![Failed to load](test.svg)](https://example.com)
