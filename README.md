@@ -1,1 +1,1 @@
-<img src="https://thefrostypixel.github.io/Test/test.svg" width="100%">
+<img src="https://raw.githubusercontent.com/thefrostypixel/Test/main/test.svg" width="100%">
