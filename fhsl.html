@@ -13,87 +13,78 @@
                 background: #000;
                 margin: 0;
             }
-            div {
-                width: 100vw;
-                height: 100px;
+            [type=range] {
+                background: #d3d3d3;
+                border-radius: 10px;
+                outline: 2px solid #FFF;
+                width: calc(100vw - 4px);
+                height: 80px;
+                cursor: pointer;
+                appearance: none;
+                -webkit-appearance: none;
+            }
+            [type=range]::-webkit-slider-thumb {
+                background: #0000;
+                border-radius: 10px;
+                outline: 2px solid #FFF;
+                width: 30px;
+                height: 80px;
+                appearance: none;
+                -webkit-appearance: none;
+            }
+            [type=range]::-moz-range-thumb {
+                background: #0000;
+                border-radius: 10px;
+                outline: 2px solid #FFF;
+                width: 30px;
+                height: 80px;
             }
         </style>
-        <div id="hue"></div><div id="grayscale"></div>
-        <br><br><br><br><br><br>
-        <div id="oHue"></div><div id="oGrayscale"></div>
-        <br><br><br><br><br><br>
-        <div id="nHue"></div><div id="nGrayscale"></div>
+        <input class="hue" type="range" min="0" max="360" value="0" oninput="colorSliders();"></div>
+        <input class="saturation" type="range" min="0" max="1" value="1"></div>
+        <input class="lightness" type="range" min="0" max="1" value=".5"></div>
         <script>
             let rgbToGray = (rgb) => Math.round(299e4 * rgb.r + 587e4 * rgb.g + 114e4 * rgb.b) * 1e-7;
             let normalizeRgb = (rgb) => {
                 let grayStr = rgbToGray(rgb) * .1 + .9;
-                return {
-                    r: Math.round((rgb.r * grayStr + (1 - grayStr) * 10) * 594035879.767138 - 67720090.19147857) * 1e-9,
-                    g: Math.round((rgb.g * grayStr + (1 - grayStr) * 10) * 594035879.767138 - 67720090.19147857) * 1e-9,
-                    b: Math.round((rgb.b * grayStr + (1 - grayStr) * 10) * 594035879.767138 - 67720090.19147857) * 1e-9
-                };
-            }
+                let f = x => Math.round((x * grayStr + (1 - grayStr) * 10) * 594035879.767138 - 67720090.19147857) * 1e-9;
+                return {r: f(rgb.r), g: f(rgb.g), b: f(rgb.b)};
+            };
             let hueToRgb = (h) => {
-                h = h % 360 / 360;
-                while (h < 0) h++;
-                let huePrime = h * 6;
-                let chroma = 1;
-                let x = chroma * (1 - Math.abs(huePrime % 2 - 1));
-                let r1, g1, b1;
-                if (huePrime >= 0 && huePrime < 1) {
-                    r1 = chroma;
-                    g1 = x;
-                    b1 = 0;
-                } else if (huePrime >= 1 && huePrime < 2) {
-                    r1 = x;
-                    g1 = chroma;
-                    b1 = 0;
-                } else if (huePrime >= 2 && huePrime < 3) {
-                    r1 = 0;
-                    g1 = chroma;
-                    b1 = x;
-                } else if (huePrime >= 3 && huePrime < 4) {
-                    r1 = 0;
-                    g1 = x;
-                    b1 = chroma;
-                } else if (huePrime >= 4 && huePrime < 5) {
-                    r1 = x;
-                    g1 = 0;
-                    b1 = chroma;
-                } else if (huePrime >= 5 && huePrime < 6) {
-                    r1 = chroma;
-                    g1 = 0;
-                    b1 = x;
-                } else {
-                    r1 = 0;
-                    g1 = 0;
-                    b1 = 0;
-                }
-                let m = 1 - chroma;
+                while ((h = h % 360 / 360) < 0) h++;
+                let x = 1 - Math.abs((h *= 6) % 2 - 1);
                 return {
-                    r: r1 + m,
-                    g: g1 + m,
-                    b: b1 + m
+                    r: h < 1 || h >= 5 ? 1 : h < 2 || h >= 4 ? x : 0,
+                    g: h < 1 || (h < 4 && h >= 3) ? x : h < 3 ? 1 : 0,
+                    b: h < 2 ? 0 : h < 3 || h >= 5 ? x : 1
                 };
             };
-            let rgbToStr = (r, g, b) => "rgb(" + Math.min(r, 1) * 255 + "," + Math.min(g, 1) * 255 + "," + Math.min(b, 1) * 255 + ")";
+            let saturateRgb = (rgb, s) => ({r: rgb.r * s + .5 * (1 - s), g: rgb.g * s + .5 * (1 - s), b: rgb.b * s + .5 * (1 - s)});
+            let lightnessRgb = (rgb, l) => {
+                return l > .5 ? {r: rgb.r * (l = 2 - 2 * l) + (1 - l), g: rgb.g * l + (1 - l), b: rgb.b * l + (1 - l)} : {r: rgb.r * (l = 2 * l), g: rgb.g * l, b: rgb.b * l};
+            };
+            let hslToRgb = (h, s, l) => lightnessRgb(saturateRgb(normalizeRgb(hueToRgb(h)), s), l);
+            
+            let rgbToStr = (rgb) => "rgb(" + rgb.r * 255 + "," + rgb.g * 255 + "," + rgb.b * 255 + ")";
 
-            let nHue = ""; let nGrayscale = "";
-
-            for (let i = 0; i <= 360; i += .01) {
-                let p = Math.round(i / 360 * 1e4) * 1e-2;
-
-                let nRgb = normalizeRgb(hueToRgb(i));
-                let nG = rgbToGray(Math.min(nRgb.r, 1), Math.min(nRgb.g, 1), Math.min(nRgb.b, 1)) * 255;
-
-                nHue += rgbToStr(nRgb.r, nRgb.g, nRgb.b) + " " + p + "%,";
-                nGrayscale += "rgb(" + nG + "," + nG + "," + nG + ") " + p + "%,";
-
-                min = Math.min(min, nRgb.r, nRgb.g, nRgb.b);
-                max = Math.max(max, nRgb.r, nRgb.g, nRgb.b);
+            let colorSliders = () => {
+                let h = Number(document.querySelector(".hue[type=range]").value);
+                let s = Number(document.querySelector(".saturation[type=range]").value);
+                let l = Number(document.querySelector(".lightness[type=range]").value);
+                console.log(h,s,l);
+                let hueStr = "";
+                let satStr = "";
+                let lightStr = "";
+                for (let i = 0; i <= 1; i += .01) {
+                    let p = Math.round(i * 1e2) * 1e-2;
+                    hueStr += rgbToStr(hslToRgb(i * 360, s, l)) + " " + p + "%,";
+                    satStr += rgbToStr(hslToRgb(h, i, l)) + " " + p + "%,";
+                    lightStr += rgbToStr(hslToRgb(h, i, l)) + " " + p + "%,";
+                }
+                document.querySelector(".hue[type=range]").style.background = "linear-gradient(to right, " + hueStr.slice(0, -1) + ")";
+                document.querySelector(".saturation[type=range]").style.background = "linear-gradient(to right, " + satStr.slice(0, -1) + ")";
+                document.querySelector(".lightness[type=range]").style.background = "linear-gradient(to right, " + lightStr.slice(0, -1) + ")";
             }
-            document.getElementById("nHue").style.background = "linear-gradient(to right, " + nHue.slice(0, -1) + ")";
-            document.getElementById("nGrayscale").style.background = "linear-gradient(to right, " + nGrayscale.slice(0, -1) + ")";
         </script>
     </body>
 </html>
