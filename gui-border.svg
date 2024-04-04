@@ -1,0 +1,29 @@
+<svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 0H44V4H106V0H110L150 40V44H146V106H150V110L110 150H106V146H44V150H40L0 110V106H4V44H0V40M24 24V126H126V24" fill="#000"/>
+    <linearGradient id="borders-gradient">
+        <stop stop-color="#888"/>
+        <stop offset="1" stop-color="#555"/>
+    </linearGradient>
+    <path d="M8 40L20 28V122L8 110" fill="url(#borders-gradient)"/>
+    <path d="M8 40L20 28V122L8 110" fill="url(#borders-gradient)" transform="rotate(90 75 75)"/>
+    <path d="M8 40L20 28V122L8 110" fill="url(#borders-gradient)" transform="rotate(180 75 75)"/>
+    <path d="M8 40L20 28V122L8 110" fill="url(#borders-gradient)" transform="rotate(270 75 75)"/>
+    <radialGradient id="corners-gray-gradient" cx="100%" cy="100%" r="142%">
+        <stop stop-color="#666"/>
+        <stop offset="1" stop-color="#AAA"/>
+    </radialGradient>
+    <path d="M4 28V4H28" fill="url(#corners-gray-gradient)"/>
+    <path d="M4 28V4H28" fill="url(#corners-gray-gradient)" transform="rotate(90 75 75)"/>
+    <path d="M4 28V4H28" fill="url(#corners-gray-gradient)" transform="rotate(180 75 75)"/>
+    <path d="M4 28V4H28" fill="url(#corners-gray-gradient)" transform="rotate(270 75 75)"/>
+    <path d="M112 2L148 38M112 148L148 112M38 148L2 112M38 2L2 38" fill="#0000" stroke="#000" stroke-width="14"/>
+    <linearGradient id="gold-lines-gradient" gradientTransform="rotate(45)">
+        <stop offset=".62" stop-color="#FC0"/>
+        <stop offset=".79" stop-color="#A80"/>
+    </linearGradient>
+    <path d="M2 38L38 2" stroke="url(#gold-lines-gradient)" stroke-width="6"/>
+    <path d="M2 38L38 2" stroke="url(#gold-lines-gradient)" stroke-width="6" transform="rotate(90 75 75)"/>
+    <path d="M2 38L38 2" stroke="url(#gold-lines-gradient)" stroke-width="6" transform="rotate(180 75 75)"/>
+    <path d="M2 38L38 2" stroke="url(#gold-lines-gradient)" stroke-width="6" transform="rotate(270 75 75)"/>
+    <path d="M108 2H148V42M108 148H148V108M42 148H2V108M42 2H2V42" fill="#0000" stroke="#000" stroke-width="4"/>
+</svg>

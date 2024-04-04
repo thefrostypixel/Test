@@ -1,0 +1,205 @@
+@font-face {
+    font-family: "Solaria";
+    font-weight: 400;
+    src: url(Solaria.otf);
+}
+
+body {
+    background: #000;
+
+    --ui-scale: 1;
+    --health: 100;
+    --damage-taken: 0;
+
+    margin: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+}
+
+* {
+    touch-action: pan-x pan-y;
+    font-family: "Solaria";
+    color: #EEE;
+    font-size: 20px;
+}
+
+.gui-border {
+    background: #000B;
+    backdrop-filter: blur(15px);
+    min-width: 64px;
+    min-height: 64px;
+}
+.gui-border::before {
+    content: "";
+    border: 25px solid;
+    border-image: url(gui-border.svg) 50 / 25px / 2px;
+    position: absolute;
+    left: -9px;
+    top: -9px;
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+    pointer-events: none;
+}
+
+#frame-stats {
+    padding: 5px 8px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 90px;
+    transform: translate(calc((50% + 9px) * var(--ui-scale) - 50%), calc((50% + 9px) * var(--ui-scale) - 50%)) scale(var(--ui-scale));
+    transition: .2s transform;
+}
+#dev-tools {
+    position: fixed;
+    top: 50vh;
+    left: 0;
+    padding: 5px 8px 9px 8px;
+    transform: translate(calc((50% + 9px) * var(--ui-scale) - 50%), -50%) scale(var(--ui-scale));
+    transition: .2s transform;
+}
+#hotbar {
+    position: fixed;
+    left: 50vw;
+    bottom: 0;
+    width: 500px;
+    height: 150px;
+    transform: translate(-50%, calc(50% - (50% + 9px) * var(--ui-scale))) scale(var(--ui-scale));
+    transition: .2s transform;
+}
+
+#settings {
+    position: fixed;
+    left: 50vw;
+    top: 50vh;
+    width: min(800px, (100vw) / var(--ui-scale) - 38px);
+    height: min(600px, (100vh) / var(--ui-scale) - 38px);
+    padding: 10px;
+    transform: translate(-50%, -50%) scale(var(--ui-scale));
+    transition: .2s transform, .2s opacity;
+    text-align: center;
+}
+#settings[hidden] {
+    display: block;
+    transform: translate(-50%, -50%) scale(calc(var(--ui-scale) * .5));
+    opacity: 0;
+    transition: .1s transform ease-in, .1s opacity ease-in;
+    pointer-events: none;
+}
+#settings-tabs button {
+    background: #0000;
+    border: none;
+    display: inline-block;
+    width: 120px;
+    margin-top: 0;
+    transition: .2s color, .2s background;
+}
+#settings-tabs button:hover {
+    background: #FFF3;
+}
+#settings-tabs button[selected] {
+    color: #FC0;
+    background: #FC04;
+}
+.settings-options {
+    height: calc(100% - 89px);
+    margin: 12px 0 5px 0;
+    overflow: scroll;
+    padding: 0 20px;
+    text-align: left;
+}
+.settings-options > span {
+    display: flex;
+    margin-bottom: 5px;
+}
+.settings-options > span > a:nth-child(1) {
+    width: calc(100% - 300px);
+    padding: 7px 0;
+}
+.settings-options > span > *:nth-child(2) {
+    width: 300px;
+}
+.settings-options > span > span > a {
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+}
+.settings-options > span > span > input[type=range] {
+    width: 246px;
+}
+
+button {
+    background: linear-gradient(to bottom, #888 0%, #555 100%);
+    border: 2px solid #000;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px 7px;
+    margin: 5px 0 0 0;
+    cursor: pointer;
+}
+
+input[type=range] {
+    background: linear-gradient(to bottom, #888 0%, #555 100%);
+    border: 2px solid #000;
+    border-radius: 5px;
+    outline: none;
+    width: 160px;
+    height: 6px;
+    cursor: pointer;
+    -webkit-appearance: none;
+
+    margin: 14px 0 0;
+}
+input[type=range]::-webkit-slider-thumb {
+    background: linear-gradient(to bottom, #FC0 0%, #A80 100%);
+    border: 2px solid #000;
+    border-radius: 9px;
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+}
+input[type=range]::-moz-range-thumb {
+    background: linear-gradient(to bottom, #FC0 0%, #A80 100%);
+    border: 2px solid #000;
+    border-radius: 9px;
+    width: 14px;
+    height: 14px;
+    appearance: none;
+}
+
+select {
+    background: linear-gradient(to bottom, #888 0%, #555 100%);
+    border: 2px solid #000;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px 7px;
+    cursor: pointer;
+}
+
+#hotbar-abilities {
+    margin: 8px;
+}
+
+#hotbar-abilities button {
+    --cooldown: #0000;
+    width: 39px;
+    margin: 0;
+}
+#hotbar-abilities button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: var(--cooldown);
+    border-radius: 2px;
+    width: 35px;
+    height: 35px;
+    top: 10px;
+    left: 10px;
+}
+
+#hotbar-health-bar, #hotbar-health-bar-frank {
+    width: 484px;
+    height: 26px;
+    margin: 8px;
+}

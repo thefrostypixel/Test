@@ -1,0 +1,16 @@
+{
+    "settings": "Einstellungen",
+    "interface": "Oberfläche",
+    "graphics": "Grafik",
+    "audio": "Audio",
+    "controls": "Steuerung",
+    "language": "Sprache",
+    "ui-scale": "Oberflächen Größe",
+    "done": "Fertig",
+
+    "devtools.title": "ENTWICKLER WERKZEUGE",
+    "game-speed": "Spiel Geschwindigkeit",
+    "locations": "Orte",
+    "spawn1": "Start 1",
+    "spawn2": "Start 2"
+}

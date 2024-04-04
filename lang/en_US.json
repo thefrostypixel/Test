@@ -1,0 +1,16 @@
+{
+    "settings": "Settings",
+    "interface": "Interface",
+    "graphics": "Graphics",
+    "audio": "Audio",
+    "controls": "Controls",
+    "language": "Language",
+    "ui-scale": "Interface Scale",
+    "done": "Done",
+
+    "devtools.title": "DEVELOPER SETTINGS",
+    "game-speed": "Game Speed",
+    "locations": "Locations",
+    "spawn1": "Spawn 1",
+    "spawn2": "Spawn 2"
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TDG</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="initial-scale=1">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
+        <link rel="preload" href="Solaria.otf" as="font" crossorigin>
+        <style id="translations"></style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <div id="frame-stats" class="gui-border"><br>Loading...<br></div>
+        <div id="dev-tools" class="gui-border">
+            <a trans="devtools.title"></a><br>
+            <br>
+            <a trans="game-speed"></a>: <a id="time-scale">1</a><br>
+            <input type="range" min="0" max="19" step="1" value="9" oninput="document.getElementById('time-scale').innerText = gameConfig.timeScale = [.01, .02, .05, .1, .2, .35, .5, .65, .8, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 7.5, 10][Number(this.value)];"><br>
+            <br>
+            <a trans="locations"></a><br>
+            <button onclick="freeCam(); player.pos = {x: 30.68, y: 11.64}; player.vel = {x: 0, y: 0, angle: 0}; player.path = undefined; followCam(player);" trans="spawn1"></button><br>
+            <button onclick="freeCam(); player.pos = {x: -30.68, y: -11.64}; player.vel = {x: 0, y: 0, angle: 0}; player.path = undefined; followCam(player);" trans="spawn2"></button><br>
+            <button onclick="freeCam(); let pos = moveInBounds(cam.pos.x, cam.pos.y, .35); player.pos = {x: pos[0], y: pos[1]}; player.vel = {x: 0, y: 0, angle: 0}; player.path = undefined; followCam(player);">TP Here</button><br>
+            <br>
+            <a>Frank</a><br>
+            <button onclick="frank.pos = Object.assign({}, player.pos); frank.vel.angle = player.vel.angle; frank.mesh.rotation.y = player.mesh.rotation.y;">TP Frank Here</button><br>
+            <br>
+            <a>Menus</a><br>
+            <button onclick="openSettings();" trans="settings"></button>
+        </div>
+        <div id="hotbar" class="gui-border">
+            <div id="hotbar-abilities">
+                <button id="hotbar-ability-fireball" ability="fireball" onclick="selectedAbility = 'fireball';">F</button>
+                <button id="hotbar-ability-iceBolt" ability="iceBolt" onclick="selectedAbility = 'iceBolt';">IB</button>
+            </div>
+            <svg id="hotbar-health-bar" viewBox="0 0 484 26"></svg>
+            <svg id="hotbar-health-bar-frank" viewBox="0 0 484 26"></svg>
+        </div>
+        <div id="settings" class="gui-border" hidden>
+            <div id="settings-tabs">
+                <button id="settings-tab-interface" onclick="selectSettingsTab('interface');" trans="interface" selected></button>
+                <button id="settings-tab-graphics" onclick="selectSettingsTab('graphics');" trans="graphics"></button>
+                <button id="settings-tab-audio" onclick="selectSettingsTab('audio');" trans="audio"></button>
+                <button id="settings-tab-controls" onclick="selectSettingsTab('controls');" trans="controls"></button>
+            </div>
+            <div id="settings-options-interface" class="settings-options">
+                <span>
+                    <a trans="language"></a>
+                    <select id="settings-language" oninput="selectLanguage(this.value);">
+                        <option value="en_US">English</option>
+                        <option value="de_DE">Deutsch</option>
+                    </select>
+                </span>
+                <span>
+                    <a trans="ui-scale"></a>
+                    <span><a id="settings-ui-scale-display">1</a><input id="settings-ui-scale" type="range" min="0" max="13" step="1" value="6" onmousedown="selectedUIScaleValue = 'changed';" oninput="if (selectedUIScaleValue == 'changed') {document.body.style = '--ui-scale: ' + (this.parentElement.querySelector('a').innerText = config.uiScale = [.4, .5, .6, .7, .8, .9, 1, 1.1, 1.2, 1.3, 1.4, 1.6, 1.8, 2][Number(this.value)]) + ';'; selectedUIScaleValue = this.value;} else {this.value = selectedUIScaleValue;}"><br></span>
+                </span>
+            </div>
+            <div id="settings-options-graphics" class="settings-options" hidden>
+                Graphics Settings Will Go Here
+            </div>
+            <div id="settings-options-audio" class="settings-options" hidden>
+                Sound Settings Will Go Here
+            </div>
+            <div id="settings-options-controls" class="settings-options" hidden>
+                Controls Will Go Here
+            </div>
+            <button onclick="closeSettings();" trans="done"></button>
+        </div>
+        <script src="help.js"></script>
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "./three/three.module.min.js",
+                    "three/addons/": "./three/addons/"
+                }
+            }
+        </script>
+        <script type="module">
+            import * as THREE from "three";
+            import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+            window.threejs = Object.assign({
+                GLTFLoader: GLTFLoader
+            }, THREE);
+        </script>
+        <script>
+            let dmg=d=>{player.health-=d;player.damageTaken+=d;return player.health}
+        </script>
+    </body>
+</html>
