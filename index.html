@@ -8,65 +8,142 @@
         <link rel="stylesheet" href="style.css">
         <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
         <link rel="preload" href="Solaria.otf" as="font" crossorigin>
-        <style id="translations"></style>
+        <style id="translations">
+            [trans]::before{content:"Missing Translation"}[trans="main-menu.button.play"]::before{content:"PLAY"}[trans="main-menu.button.settings"]::before{content:"Settings"}[trans="main-menu.button.achievements"]::before{content:"Achievements"}[trans="main-menu.button.abilities"]::before{content:"Abilities"}[trans="main-menu.button.characters"]::before{content:"Characters"}[trans="main-menu.button.account"]::before{content:"Account"}[trans="main-menu.button.download-game"]::before{content:"Download Game"}[trans="main-menu.button.quit"]::before{content:"Quit"}[trans="settings"]::before{content:"Settings"}[trans="settings.interface"]::before{content:"Interface"}[trans="settings.graphics"]::before{content:"Graphics"}[trans="settings.audio"]::before{content:"Audio"}[trans="settings.controls"]::before{content:"Controls"}[trans="settings.interface.language"]::before{content:"Language"}[trans="settings.interface.ui-scale"]::before{content:"Interface Scale"}[trans="settings.control.forward"]::before{content:"Forward"}[trans="settings.control.backward"]::before{content:"Backward"}[trans="settings.control.left"]::before{content:"Left"}[trans="settings.control.right"]::before{content:"Right"}[trans="settings.control.followPlayer"]::before{content:"Follow Player"}[trans="settings.control.ability1"]::before{content:"Ability 1"}[trans="settings.control.ability2"]::before{content:"Ability 2"}[trans="settings.control.ability3"]::before{content:"Ability 3"}[trans="settings.control.ability4"]::before{content:"Ability 4"}[trans="settings.control.ability5"]::before{content:"Ability 5"}[trans="settings.control.ability6"]::before{content:"Ability 6"}[trans="control.unbound"]::before{content:"Unbound"}[trans="control.esc"]::before{content:"Esc"}[trans="control.space"]::before{content:"Space"}[trans="control.numpad"]::before{content:"Numpad"}[trans="control.left-mouse"]::before{content:"Left Mouse"}[trans="control.mouse-wheel"]::before{content:"Mouse Wheel"}[trans="control.right-mouse"]::before{content:"Right Mouse"}[trans="control.mouse"]::before{content:"Mouse"}[trans="revert"]::before{content:"Revert"}[trans="done"]::before{content:"Done"}[trans="devtools.title"]::before{content:"DEVELOPER SETTINGS"}[trans="devtools.game-speed"]::before{content:"Game Speed"}[trans="devtools.locations"]::before{content:"Locations"}[trans="devtools.locations.spawn"]::before{content:"Spawn"}[trans="devtools.locations.tp-to-cam"]::before{content:"TP to Camera"}[trans="devtools.menus"]::before{content:"Menus"}[trans="devtools.menus.settings"]::before{content:"Settings"}
+        </style><!--selectLanguage("en-US",s=>console.log("\n            "+s+"\n        </style>"))-->
     </head>
     <body>
-        <canvas id="canvas"></canvas>
-        <div id="frame-stats" class="gui-border"><br>Loading...<br></div>
-        <div id="dev-tools" class="gui-border">
-            <a trans="devtools.title"></a><br>
-            <br>
-            <a trans="game-speed"></a>: <a id="time-scale">1</a><br>
-            <input type="range" min="0" max="19" step="1" value="9" oninput="document.getElementById('time-scale').innerText = gameConfig.timeScale = [.01, .02, .05, .1, .2, .35, .5, .65, .8, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 7.5, 10][Number(this.value)];"><br>
-            <br>
-            <a trans="locations"></a><br>
-            <button onclick="freeCam(); player.pos = {x: 30.68, y: 11.64}; player.vel = {x: 0, y: 0, angle: 0}; player.path = undefined; followCam(player);" trans="spawn1"></button><br>
-            <button onclick="freeCam(); player.pos = {x: -30.68, y: -11.64}; player.vel = {x: 0, y: 0, angle: 0}; player.path = undefined; followCam(player);" trans="spawn2"></button><br>
-            <button onclick="freeCam(); let pos = moveInBounds(cam.pos.x, cam.pos.y, .35); player.pos = {x: pos[0], y: pos[1]}; player.vel = {x: 0, y: 0, angle: 0}; player.path = undefined; followCam(player);">TP Here</button><br>
-            <br>
-            <a>Frank</a><br>
-            <button onclick="frank.pos = Object.assign({}, player.pos); frank.vel.angle = player.vel.angle; frank.mesh.rotation.y = player.mesh.rotation.y;">TP Frank Here</button><br>
-            <br>
-            <a>Menus</a><br>
-            <button onclick="openSettings();" trans="settings"></button>
-        </div>
-        <div id="hotbar" class="gui-border">
-            <div id="hotbar-abilities">
-                <button id="hotbar-ability-fireball" ability="fireball" onclick="selectedAbility = 'fireball';">F</button>
-                <button id="hotbar-ability-iceBolt" ability="iceBolt" onclick="selectedAbility = 'iceBolt';">IB</button>
+        <div id="debug-text" class="gui-border">Loading...</div>
+        <div id="main-menu" class="menu">
+            <div id="main-menu-background"></div>
+            <div id="main-menu-buttons">
+                <button id="main-menu-button-play" trans="main-menu.button.play"></button>
+                <button id="main-menu-button-settings" onclick="openSettings();" trans="main-menu.button.settings"></button>
+                <button id="main-menu-button-achievements" trans="main-menu.button.achievements"></button>
+                <button id="main-menu-button-abilities" trans="main-menu.button.abilities"></button>
+                <button id="main-menu-button-characters" trans="main-menu.button.characters"></button>
+                <button id="main-menu-button-account" trans="main-menu.button.account"></button>
+                <button id="main-menu-button-download" trans="main-menu.button.download-game" hidden></button>
+                <button id="main-menu-button-quit" trans="main-menu.button.quit" hidden></button>
             </div>
-            <svg id="hotbar-health-bar" viewBox="0 0 484 26"></svg>
-            <svg id="hotbar-health-bar-frank" viewBox="0 0 484 26"></svg>
+        </div>
+        <div id="game" class="menu" hidden>
+            <canvas id="canvas"></canvas>
+            <div id="dev-tools" class="gui-border">
+                <a trans="devtools.title"></a><br>
+                <br>
+                <a trans="devtools.game-speed"></a>: <a id="time-scale">1</a><br>
+                <input type="range" min="0" max="19" step="1" value="9" oninput="document.getElementById('time-scale').innerText = game.timeScale = [.01, .02, .05, .1, .2, .35, .5, .65, .8, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 7.5, 10][Number(this.value)];"><br>
+                <br>
+                <a trans="locations"></a><br>
+                <button onclick="freeCam(); player.pos = {x: 30.68, y: 11.64}; player.vel = {x: 0, y: 0, angle: 0}; followCam(player);" trans="devtools.locations.spawn"> 1</button><br>
+                <button onclick="freeCam(); player.pos = {x: -30.68, y: -11.64}; player.vel = {x: 0, y: 0, angle: 0}; followCam(player);" trans="devtools.locations.spawn"> 2</button><br>
+                <button onclick="freeCam(); player.pos = moveInBounds(cam.pos.x, cam.pos.y, .35); player.vel = {x: 0, y: 0, angle: 0}; followCam(player);" trans="devtools.locations.tp-to-cam"></button><br>
+                <br>
+                <a>Frank</a><br>
+                <button onclick="frank.pos=Object.assign({},player.pos);frank.vel.angle=player.vel.angle;frank.mesh.rotation.y=player.mesh.rotation.y">TP Frank Here</button><br>
+                <br>
+                <a trans="devtools.menus"></a><br>
+                <button onclick="openSettings();" trans="devtools.menus.settings"></button>
+            </div>
+            <div id="hotbar" class="gui-border">
+                <div id="hotbar-abilities">
+                    <button id="hotbar-ability-fireball" ability="fireball" onclick="selectedAbility = 'fireball';" title="Fireball">F</button>
+                    <button id="hotbar-ability-iceBolt" ability="iceBolt" onclick="selectedAbility = 'iceBolt';" title="Ice Bolt">IB</button>
+                    <button id="hotbar-ability-lightning" ability="lightning" onclick="selectedAbility = 'lightning';" title="Lightning">L</button>
+                    <button id="hotbar-ability-shadowBolt" ability="shadowBolt" onclick="selectedAbility = 'shadowBolt';" title="Shadow Bolt">S</button>
+                    <button id="hotbar-ability-shockwave" ability="shockwave" onclick="selectedAbility = 'shockwave';" title="Shockwave">W</button>
+                </div>
+                <svg id="hotbar-health-bar" viewBox="0 0 484 26"></svg>
+                <svg id="hotbar-health-bar-frank" viewBox="0 0 484 26"></svg>
+            </div>
         </div>
         <div id="settings" class="gui-border" hidden>
             <div id="settings-tabs">
-                <button id="settings-tab-interface" onclick="selectSettingsTab('interface');" trans="interface" selected></button>
-                <button id="settings-tab-graphics" onclick="selectSettingsTab('graphics');" trans="graphics"></button>
-                <button id="settings-tab-audio" onclick="selectSettingsTab('audio');" trans="audio"></button>
-                <button id="settings-tab-controls" onclick="selectSettingsTab('controls');" trans="controls"></button>
+                <button id="settings-tab-interface" onclick="selectSettingsTab('interface');" trans="settings.interface" selected></button>
+                <button id="settings-tab-graphics" onclick="selectSettingsTab('graphics');" trans="settings.graphics"></button>
+                <button id="settings-tab-audio" onclick="selectSettingsTab('audio');" trans="settings.audio"></button>
+                <button id="settings-tab-controls" onclick="selectSettingsTab('controls');" trans="settings.controls"></button>
             </div>
-            <div id="settings-options-interface" class="settings-options">
-                <span>
-                    <a trans="language"></a>
-                    <select id="settings-language" oninput="selectLanguage(this.value);">
-                        <option value="en_US">English</option>
-                        <option value="de_DE">Deutsch</option>
-                    </select>
-                </span>
-                <span>
-                    <a trans="ui-scale"></a>
-                    <span><a id="settings-ui-scale-display">1</a><input id="settings-ui-scale" type="range" min="0" max="13" step="1" value="6" onmousedown="selectedUIScaleValue = 'changed';" oninput="if (selectedUIScaleValue == 'changed') {document.body.style = '--ui-scale: ' + (this.parentElement.querySelector('a').innerText = config.uiScale = [.4, .5, .6, .7, .8, .9, 1, 1.1, 1.2, 1.3, 1.4, 1.6, 1.8, 2][Number(this.value)]) + ';'; selectedUIScaleValue = this.value;} else {this.value = selectedUIScaleValue;}"><br></span>
-                </span>
+            <div id="settings-options">
+                <div id="settings-options-interface" class="settings-options">
+                    <div>
+                        <a trans="settings.interface.language">:&nbsp;</a>
+                        <select id="settings-interface-language" oninput="selectLanguage(this.value);">
+                            <option value="en-US">English</option>
+                            <option value="de-DE">Deutsch</option>
+                        </select>
+                    </div>
+                    <div>
+                    <span>
+                        <a trans="settings.interface.ui-scale">:&nbsp;</a>
+                        <a id="settings-interface-ui-scale-display">1</a>&nbsp;
+                    </span>
+                        <input id="settings-interface-ui-scale" type="range" min="0" max="13" step="1" value="6" onmousedown="selectedUIScaleValue = 'changed';" oninput="if (selectedUIScaleValue == 'changed') {document.body.style = '--ui-scale: ' + (document.getElementById('settings-interface-ui-scale-display').innerText = settings.uiScale = [.4, .5, .6, .7, .8, .9, 1, 1.1, 1.2, 1.3, 1.4, 1.6, 1.8, 2][Number(this.value)]) + ';'; selectedUIScaleValue = this.value;} else {this.value = selectedUIScaleValue;}">
+                    </div>
+                </div>
+                <div id="settings-options-graphics" class="settings-options" hidden>
+                    Graphics Settings Will Go Here
+                </div>
+                <div id="settings-options-audio" class="settings-options" hidden>
+                    Sound Settings Will Go Here
+                </div>
+                <div id="settings-options-controls" class="settings-options" hidden>
+                    <div>
+                        <a trans="settings.control.forward">:&nbsp;</a>
+                        <button id="settings-control-forward" class="settings-control" onclick="inputControl('forward');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.backward">:&nbsp;</a>
+                        <button id="settings-control-backward" class="settings-control" onclick="inputControl('backward');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.left">:&nbsp;</a>
+                        <button id="settings-control-left" class="settings-control" onclick="inputControl('left');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.right">:&nbsp;</a>
+                        <button id="settings-control-right" class="settings-control" onclick="inputControl('right');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.followPlayer">:&nbsp;</a>
+                        <button id="settings-control-followPlayer" class="settings-control" onclick="inputControl('followPlayer');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.ability1">:&nbsp;</a>
+                        <button id="settings-control-ability1" class="settings-control" onclick="inputControl('ability1');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.ability2">:&nbsp;</a>
+                        <button id="settings-control-ability2" class="settings-control" onclick="inputControl('ability2');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.ability3">:&nbsp;</a>
+                        <button id="settings-control-ability3" class="settings-control" onclick="inputControl('ability3');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.ability4">:&nbsp;</a>
+                        <button id="settings-control-ability4" class="settings-control" onclick="inputControl('ability4');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.ability5">:&nbsp;</a>
+                        <button id="settings-control-ability5" class="settings-control" onclick="inputControl('ability5');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.ability6">:&nbsp;</a>
+                        <button id="settings-control-ability6" class="settings-control" onclick="inputControl('ability6');"></button>
+                    </div>
+                    <div id="settings-control-input" class="gui-border" hidden>
+                        <a id="settings-control-input-title"></a>
+                        <button id="settings-control-input-button">Press any key<br>or click here</button>
+                        <div>
+                            <button id="settings-control-input-unassign">Unassign</button>
+                            <button id="settings-control-input-cancel" onclick="document.getElementById('settings-control-input').setAttribute('hidden', '');">Cancel</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="settings-options-graphics" class="settings-options" hidden>
-                Graphics Settings Will Go Here
-            </div>
-            <div id="settings-options-audio" class="settings-options" hidden>
-                Sound Settings Will Go Here
-            </div>
-            <div id="settings-options-controls" class="settings-options" hidden>
-                Controls Will Go Here
-            </div>
+            <button onclick="loadSettings();" trans="revert"></button>
             <button onclick="closeSettings();" trans="done"></button>
         </div>
         <script src="script.js"></script>
@@ -78,15 +155,20 @@
                 }
             }
         </script>
-        <script type="module">
-            import * as THREE from "three";
-            import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-            window.threejs = Object.assign({
-                GLTFLoader: GLTFLoader
-            }, THREE);
+        <script type="module" defer>
+            import * as threejs from "three";
+            import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+            window.threejs = Object.assign({GLTFLoader}, threejs);
         </script>
         <script>
-            let dmg=d=>{player.health-=d;player.damageTaken+=d;return player.health}
+            selectLanguage("en-US");
+            openSettings();selectSettingsTab("controls");
         </script>
     </body>
 </html>
+<!--
+TODO
+Move/Attack, Use Selected Ability & Drag Camera Keybinds
+Move getDragVel function into rest of code
+Game Crash Handling
+-->

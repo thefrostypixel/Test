@@ -1,0 +1,51 @@
+{
+    "main-menu.button.play": "PLAY",
+    "main-menu.button.settings": "Settings",
+    "main-menu.button.achievements": "Achievements",
+    "main-menu.button.abilities": "Abilities",
+    "main-menu.button.characters": "Characters",
+    "main-menu.button.account": "Account",
+    "main-menu.button.download-game": "Download Game",
+    "main-menu.button.quit": "Quit",
+
+    "settings": "Settings",
+    "settings.interface": "Interface",
+    "settings.graphics": "Graphics",
+    "settings.audio": "Audio",
+    "settings.controls": "Controls",
+
+    "settings.interface.language": "Language",
+    "settings.interface.ui-scale": "Interface Scale",
+
+    "settings.control.forward": "Forward",
+    "settings.control.backward": "Backward",
+    "settings.control.left": "Left",
+    "settings.control.right": "Right",
+    "settings.control.followPlayer": "Follow Player",
+    "settings.control.ability1": "Ability 1",
+    "settings.control.ability2": "Ability 2",
+    "settings.control.ability3": "Ability 3",
+    "settings.control.ability4": "Ability 4",
+    "settings.control.ability5": "Ability 5",
+    "settings.control.ability6": "Ability 6",
+
+    "control.unbound": "Unbound",
+    "control.esc": "Esc",
+    "control.space": "Space",
+    "control.numpad": "Numpad",
+    "control.left-mouse": "Left Mouse",
+    "control.mouse-wheel": "Mouse Wheel",
+    "control.right-mouse": "Right Mouse",
+    "control.mouse": "Mouse",
+
+    "revert": "Revert",
+    "done": "Done",
+
+    "devtools.title": "DEVELOPER SETTINGS",
+    "devtools.game-speed": "Game Speed",
+    "devtools.locations": "Locations",
+    "devtools.locations.spawn": "Spawn",
+    "devtools.locations.tp-to-cam": "TP to Camera",
+    "devtools.menus": "Menus",
+    "devtools.menus.settings": "Settings"
+}

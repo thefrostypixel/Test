@@ -1,0 +1,51 @@
+{
+    "main-menu.button.play": "SPIELEN",
+    "main-menu.button.settings": "Einstellungen",
+    "main-menu.button.achievements": "Erfolge",
+    "main-menu.button.abilities": "Fähigkeiten",
+    "main-menu.button.characters": "Charaktere",
+    "main-menu.button.account": "Account",
+    "main-menu.button.download-game": "Spiel Herunterladen",
+    "main-menu.button.quit": "Beenden",
+
+    "settings": "Einstellungen",
+    "settings.interface": "Oberfläche",
+    "settings.graphics": "Grafik",
+    "settings.audio": "Audio",
+    "settings.controls": "Steuerung",
+
+    "settings.interface.language": "Sprache",
+    "settings.interface.ui-scale": "Oberflächenskalierung",
+
+    "settings.control.forward": "Vorwärts",
+    "settings.control.backward": "Rückwärts",
+    "settings.control.left": "Links",
+    "settings.control.right": "Rechts",
+    "settings.control.followPlayer": "Spieler folgen",
+    "settings.control.ability1": "Fähigkeit 1",
+    "settings.control.ability2": "Fähigkeit 2",
+    "settings.control.ability3": "Fähigkeit 3",
+    "settings.control.ability4": "Fähigkeit 4",
+    "settings.control.ability5": "Fähigkeit 5",
+    "settings.control.ability6": "Fähigkeit 6",
+
+    "control.unbound": "Nichts",
+    "control.esc": "Esc",
+    "control.space": "Leertaste",
+    "control.numpad": "Nummer",
+    "control.left-mouse": "Linke Maus",
+    "control.mouse-wheel": "Mausrad",
+    "control.right-mouse": "Rechte Maus",
+    "control.mouse": "Maus",
+
+    "revert": "Zurücksetzen",
+    "done": "Fertig",
+
+    "devtools.title": "ENTWICKLERWERKZEUGE",
+    "devtools.game-speed": "Spielgeschwindigkeit",
+    "devtools.locations": "Orte",
+    "devtools.locations.spawn": "Start",
+    "devtools.locations.tp-to-cam": "TP zur Kamera",
+    "devtools.menus": "Menüs",
+    "devtools.menus.settings": "Einstellungen"
+}
