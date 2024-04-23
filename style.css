@@ -19,6 +19,7 @@ body {
     font-family: "Solaria";
     color: #EEE;
     font-size: 20px;
+    -webkit-tap-highlight-color: #0000;
 }
 button {
     background: linear-gradient(#888, #555);
@@ -29,8 +30,46 @@ button {
     margin: 5px 0 0 0;
     cursor: pointer;
 }
+button.toggle-switch {
+    background: linear-gradient(#444, #333);
+    border: 2px solid #000;
+    border-radius: 21px;
+    display: block;
+    width: 80px;
+    height: 41px;
+}
+button.toggle-switch::before {
+    content: "";
+    background: linear-gradient(#B90, #970);
+    border: 1px solid #000;
+    border-radius: 19px 0 0 19px;
+    display: block;
+    width: 19px;
+    height: 37px;
+    margin-left: -8px;
+    margin-top: -7px;
+    transition: .2s width;
+}
+button.toggle-switch[active]::before {
+    width: 61px;
+}
+button.toggle-switch::after {
+    content: "";
+    background: linear-gradient(#888, #555);
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: block;
+    width: 37px;
+    height: 37px;
+    margin-left: -9px;
+    margin-top: -40px;
+    transition: .2s margin-left;
+}
+button.toggle-switch[active]::after {
+    margin-left: 30px;
+}
 input[type=range] {
-    background: linear-gradient(to bottom, #888 0%, #555 100%);
+    background: linear-gradient(#888, #555);
     border: 2px solid #000;
     border-radius: 5px;
     outline: none;
@@ -42,7 +81,7 @@ input[type=range] {
     margin: 14px 0 0;
 }
 input[type=range]::-webkit-slider-thumb {
-    background: linear-gradient(to bottom, #FC0 0%, #A80 100%);
+    background: linear-gradient(#FC0, #A80);
     border: 2px solid #000;
     border-radius: 9px;
     width: 18px;
@@ -50,7 +89,7 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
 }
 input[type=range]::-moz-range-thumb {
-    background: linear-gradient(to bottom, #FC0 0%, #A80 100%);
+    background: linear-gradient(#FC0, #A80);
     border: 2px solid #000;
     border-radius: 9px;
     width: 14px;
@@ -58,7 +97,7 @@ input[type=range]::-moz-range-thumb {
     appearance: none;
 }
 select {
-    background: linear-gradient(to bottom, #888 0%, #555 100%);
+    background: linear-gradient(#888, #555);
     border: 2px solid #000;
     border-radius: 5px;
     outline: none;
@@ -67,8 +106,9 @@ select {
 }
 
 .gui-border {
-    background: #000B;
-    backdrop-filter: blur(calc(15px / var(--ui-scale)));
+    background: #0008;
+    backdrop-filter: blur(calc(25px / var(--ui-scale)));
+    -webkit-backdrop-filter: blur(calc(25px / var(--ui-scale)));
     min-width: 64px;
     min-height: 64px;
 }
@@ -82,6 +122,9 @@ select {
     width: calc(100% - 32px);
     height: calc(100% - 32px);
     pointer-events: none;
+}
+[hidden] {
+    display: none !important;
 }
 
 #debug-text {
@@ -146,12 +189,6 @@ select {
     transform: translate(-50%, -50%) scale(var(--ui-scale));
     text-align: center;
 }
-#settings[hidden] {
-    display: block;
-    transform: translate(-50%, -50%) scale(calc(var(--ui-scale) * .5));
-    opacity: 0;
-    pointer-events: none;
-}
 #settings-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -185,9 +222,6 @@ select {
     align-content: center;
     text-align: left;
 }
-.settings-options[hidden] {
-    display: none;
-}
 .settings-options div {
     display: flex;
     justify-content: space-between;
@@ -218,10 +252,7 @@ input.settings-control {
     top: 50%;
     width: 300px;
     height: 200px;
-    transform: translate(-50%, -50%) scale(var(--ui-scale));
-}
-#settings-control-input[hidden] {
-    display: none;
+    transform: translate(-50%, -50%);
 }
 #settings-control-input-button {
     border-radius: 10px;
@@ -232,7 +263,7 @@ input.settings-control {
     margin-right: 8px;
 }
 
-#dev-tools {
+#devtools {
     position: fixed;
     top: 50vh;
     left: 0;
@@ -256,6 +287,9 @@ input.settings-control {
     width: 39px;
     margin: 0;
 }
+#hotbar-abilities button[selected] {
+    background: linear-gradient(#B90, #970);
+}
 #hotbar-abilities button::after {
     content: "";
     display: block;
@@ -270,4 +304,39 @@ input.settings-control {
     width: 484px;
     height: 26px;
     margin: 0 8px 4px 8px;
+}
+
+#game-crash {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 50vw;
+    top: 50vh;
+    padding: 30px;
+    transform: translate(-50%, -50%) scale(var(--ui-scale));
+    text-align: center;
+    z-index: 100;
+}
+#game-crash-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+#game-crash-report {
+    text-underline-offset: 2px;
+}
+#game-crash-error-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+#game-crash-error {
+    margin-top: 20px;
+    text-align: left;
+}
+#game-crash-bottom {
+    display: flex;
+    justify-content: flex-end;
+}
+#game-crash-reload {
+    margin-top: 20px;
 }

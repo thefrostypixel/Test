@@ -18,7 +18,7 @@
             <div id="main-menu-background"></div>
             <div id="main-menu-buttons">
                 <button id="main-menu-button-play" trans="main-menu.button.play"></button>
-                <button id="main-menu-button-settings" onclick="openSettings();" trans="main-menu.button.settings"></button>
+                <button id="main-menu-button-settings" onclick="showElement(document.getElementById('settings'));" trans="main-menu.button.settings"></button>
                 <button id="main-menu-button-achievements" trans="main-menu.button.achievements"></button>
                 <button id="main-menu-button-abilities" trans="main-menu.button.abilities"></button>
                 <button id="main-menu-button-characters" trans="main-menu.button.characters"></button>
@@ -29,30 +29,30 @@
         </div>
         <div id="game" class="menu" hidden>
             <canvas id="canvas"></canvas>
-            <div id="dev-tools" class="gui-border">
+            <div id="devtools" class="gui-border">
                 <a trans="devtools.title"></a><br>
                 <br>
                 <a trans="devtools.game-speed"></a>: <a id="time-scale">1</a><br>
                 <input type="range" min="0" max="19" step="1" value="9" oninput="document.getElementById('time-scale').innerText = game.timeScale = [.01, .02, .05, .1, .2, .35, .5, .65, .8, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4, 5, 7.5, 10][Number(this.value)];"><br>
                 <br>
-                <a trans="locations"></a><br>
+                <a trans="devtools.locations"></a><br>
                 <button onclick="freeCam(); player.pos = {x: 30.68, y: 11.64}; player.vel = {x: 0, y: 0, angle: 0}; followCam(player);" trans="devtools.locations.spawn"> 1</button><br>
                 <button onclick="freeCam(); player.pos = {x: -30.68, y: -11.64}; player.vel = {x: 0, y: 0, angle: 0}; followCam(player);" trans="devtools.locations.spawn"> 2</button><br>
-                <button onclick="freeCam(); player.pos = moveInBounds(cam.pos.x, cam.pos.y, .35); player.vel = {x: 0, y: 0, angle: 0}; followCam(player);" trans="devtools.locations.tp-to-cam"></button><br>
+                <button onclick="freeCam(); player.pos = moveInBounds(cam.pos, .35); player.vel = {x: 0, y: 0, angle: 0}; followCam(player);" trans="devtools.locations.tp-to-cam"></button><br>
                 <br>
                 <a>Frank</a><br>
                 <button onclick="frank.pos=Object.assign({},player.pos);frank.vel.angle=player.vel.angle;frank.mesh.rotation.y=player.mesh.rotation.y">TP Frank Here</button><br>
                 <br>
                 <a trans="devtools.menus"></a><br>
-                <button onclick="openSettings();" trans="devtools.menus.settings"></button>
+                <button onclick="showElement(document.getElementById('settings'));" trans="devtools.menus.settings"></button>
             </div>
             <div id="hotbar" class="gui-border">
                 <div id="hotbar-abilities">
-                    <button id="hotbar-ability-fireball" ability="fireball" onclick="selectedAbility = 'fireball';" title="Fireball">F</button>
-                    <button id="hotbar-ability-iceBolt" ability="iceBolt" onclick="selectedAbility = 'iceBolt';" title="Ice Bolt">IB</button>
-                    <button id="hotbar-ability-lightning" ability="lightning" onclick="selectedAbility = 'lightning';" title="Lightning">L</button>
-                    <button id="hotbar-ability-shadowBolt" ability="shadowBolt" onclick="selectedAbility = 'shadowBolt';" title="Shadow Bolt">S</button>
-                    <button id="hotbar-ability-shockwave" ability="shockwave" onclick="selectedAbility = 'shockwave';" title="Shockwave">W</button>
+                    <button id="hotbar-ability-fireball" ability="fireball" onclick="selectAbility('fireball');" title="Fireball">F</button>
+                    <button id="hotbar-ability-iceBolt" ability="iceBolt" onclick="selectAbility('iceBolt');" title="Ice Bolt">IB</button>
+                    <button id="hotbar-ability-lightning" ability="lightning" onclick="selectAbility('lightning');" title="Lightning">L</button>
+                    <button id="hotbar-ability-shadowBolt" ability="shadowBolt" onclick="selectAbility('shadowBolt');" title="Shadow Bolt">S</button>
+                    <button id="hotbar-ability-shockwave" ability="shockwave" onclick="selectAbility('shockwave');" title="Shockwave">W</button>
                 </div>
                 <svg id="hotbar-health-bar" viewBox="0 0 484 26"></svg>
                 <svg id="hotbar-health-bar-frank" viewBox="0 0 484 26"></svg>
@@ -68,18 +68,24 @@
             <div id="settings-options">
                 <div id="settings-options-interface" class="settings-options">
                     <div>
-                        <a trans="settings.interface.language">:&nbsp;</a>
+                        <a trans="settings.interface.language">:</a>
                         <select id="settings-interface-language" oninput="selectLanguage(this.value);">
                             <option value="en-US">English</option>
                             <option value="de-DE">Deutsch</option>
                         </select>
                     </div>
                     <div>
-                    <span>
-                        <a trans="settings.interface.ui-scale">:&nbsp;</a>
-                        <a id="settings-interface-ui-scale-display">1</a>&nbsp;
-                    </span>
+                        <span>
+                            <a trans="settings.interface.ui-scale">:</a>
+                            <a id="settings-interface-ui-scale-display">1</a>&nbsp;
+                        </span>
                         <input id="settings-interface-ui-scale" type="range" min="0" max="13" step="1" value="6" onmousedown="selectedUIScaleValue = 'changed';" oninput="if (selectedUIScaleValue == 'changed') {document.body.style = '--ui-scale: ' + (document.getElementById('settings-interface-ui-scale-display').innerText = settings.uiScale = [.4, .5, .6, .7, .8, .9, 1, 1.1, 1.2, 1.3, 1.4, 1.6, 1.8, 2][Number(this.value)]) + ';'; selectedUIScaleValue = this.value;} else {this.value = selectedUIScaleValue;}">
+                    </div>
+                    <div>
+                        <span>
+                            <a>Confirm Closing Game</a>
+                        </span>
+                        <button id="settings-interface-confirm-exit" class="toggle-switch" onclick="settings.confirmExit = this.toggleAttribute('active');"></button>
                     </div>
                 </div>
                 <div id="settings-options-graphics" class="settings-options" hidden>
@@ -90,61 +96,83 @@
                 </div>
                 <div id="settings-options-controls" class="settings-options" hidden>
                     <div>
-                        <a trans="settings.control.forward">:&nbsp;</a>
-                        <button id="settings-control-forward" class="settings-control" onclick="inputControl('forward');"></button>
-                    </div>
-                    <div>
-                        <a trans="settings.control.backward">:&nbsp;</a>
-                        <button id="settings-control-backward" class="settings-control" onclick="inputControl('backward');"></button>
-                    </div>
-                    <div>
-                        <a trans="settings.control.left">:&nbsp;</a>
-                        <button id="settings-control-left" class="settings-control" onclick="inputControl('left');"></button>
-                    </div>
-                    <div>
-                        <a trans="settings.control.right">:&nbsp;</a>
-                        <button id="settings-control-right" class="settings-control" onclick="inputControl('right');"></button>
+                        <a trans="settings.control.move">:&nbsp;</a>
+                        <button id="settings-control-move" class="settings-control" onclick="inputControl('move');"></button>
                     </div>
                     <div>
                         <a trans="settings.control.followPlayer">:&nbsp;</a>
                         <button id="settings-control-followPlayer" class="settings-control" onclick="inputControl('followPlayer');"></button>
                     </div>
                     <div>
-                        <a trans="settings.control.ability1">:&nbsp;</a>
-                        <button id="settings-control-ability1" class="settings-control" onclick="inputControl('ability1');"></button>
+                        <a trans="settings.control.camForward">:&nbsp;</a>
+                        <button id="settings-control-camForward" class="settings-control" onclick="inputControl('camForward');"></button>
                     </div>
                     <div>
-                        <a trans="settings.control.ability2">:&nbsp;</a>
-                        <button id="settings-control-ability2" class="settings-control" onclick="inputControl('ability2');"></button>
+                        <a trans="settings.control.camBackward">:&nbsp;</a>
+                        <button id="settings-control-camBackward" class="settings-control" onclick="inputControl('camBackward');"></button>
                     </div>
                     <div>
-                        <a trans="settings.control.ability3">:&nbsp;</a>
-                        <button id="settings-control-ability3" class="settings-control" onclick="inputControl('ability3');"></button>
+                        <a trans="settings.control.camLeft">:&nbsp;</a>
+                        <button id="settings-control-camLeft" class="settings-control" onclick="inputControl('camLeft');"></button>
                     </div>
                     <div>
-                        <a trans="settings.control.ability4">:&nbsp;</a>
-                        <button id="settings-control-ability4" class="settings-control" onclick="inputControl('ability4');"></button>
+                        <a trans="settings.control.camRight">:&nbsp;</a>
+                        <button id="settings-control-camRight" class="settings-control" onclick="inputControl('camRight');"></button>
                     </div>
                     <div>
-                        <a trans="settings.control.ability5">:&nbsp;</a>
-                        <button id="settings-control-ability5" class="settings-control" onclick="inputControl('ability5');"></button>
+                        <a trans="settings.control.dragCam">:&nbsp;</a>
+                        <button id="settings-control-dragCam" class="settings-control" onclick="inputControl('dragCam');"></button>
                     </div>
                     <div>
-                        <a trans="settings.control.ability6">:&nbsp;</a>
-                        <button id="settings-control-ability6" class="settings-control" onclick="inputControl('ability6');"></button>
+                        <a trans="settings.control.castAbility1">:&nbsp;</a>
+                        <button id="settings-control-castAbility1" class="settings-control" onclick="inputControl('castAbility1');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.castAbility2">:&nbsp;</a>
+                        <button id="settings-control-castAbility2" class="settings-control" onclick="inputControl('castAbility2');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.castAbility3">:&nbsp;</a>
+                        <button id="settings-control-castAbility3" class="settings-control" onclick="inputControl('castAbility3');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.castAbility4">:&nbsp;</a>
+                        <button id="settings-control-castAbility4" class="settings-control" onclick="inputControl('castAbility4');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.castAbility5">:&nbsp;</a>
+                        <button id="settings-control-castAbility5" class="settings-control" onclick="inputControl('castAbility5');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.castAbility6">:&nbsp;</a>
+                        <button id="settings-control-castAbility6" class="settings-control" onclick="inputControl('castAbility6');"></button>
+                    </div>
+                    <div>
+                        <a trans="settings.control.castSelectedAbility">:&nbsp;</a>
+                        <button id="settings-control-castSelectedAbility" class="settings-control" onclick="inputControl('castSelectedAbility');"></button>
                     </div>
                     <div id="settings-control-input" class="gui-border" hidden>
                         <a id="settings-control-input-title"></a>
-                        <button id="settings-control-input-button">Press any key<br>or click here</button>
+                        <button id="settings-control-input-button" trans="settings.controls.press-key-or-click"></button>
                         <div>
-                            <button id="settings-control-input-unassign">Unassign</button>
-                            <button id="settings-control-input-cancel" onclick="document.getElementById('settings-control-input').setAttribute('hidden', '');">Cancel</button>
+                            <button id="settings-control-input-unassign" trans="unassign"></button>
+                            <button id="settings-control-input-cancel" onclick="hideElement(document.getElementById('settings-control-input'));" trans="cancel"></button>
                         </div>
                     </div>
                 </div>
             </div>
             <button onclick="loadSettings();" trans="revert"></button>
             <button onclick="closeSettings();" trans="done"></button>
+        </div>
+        <div id="game-crash" class="gui-border" hidden>
+            <div id="game-crash-title">GAME CRASHED!</div>
+            <div id="game-crash-report">You can report this crash here: <a href="https://example.com">example.com</a></div>
+            <div id="game-crash-error-buttons">
+                <button id="game-crash-toggle-error" onclick="this.innerText = document.getElementById('game-crash-error').toggleAttribute('hidden') ? 'Show Error' : 'Hide Error';">Show Error</button>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('game-crash-error').innerHTML.replace('<br>', '\n'));">Copy Error</button>
+            </div>
+            <div id="game-crash-error" hidden></div>
+            <div id="game-crash-bottom"><button id="game-crash-reload" onclick="location.reload();">Reload Game</button></div>
         </div>
         <script src="script.js"></script>
         <script type="importmap">
@@ -159,6 +187,9 @@
             import * as threejs from "three";
             import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
             window.threejs = Object.assign({GLTFLoader}, threejs);
+        </script>
+        <script>
+            selectLanguage("en-US");
         </script>
     </body>
 </html>
